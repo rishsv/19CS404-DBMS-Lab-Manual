@@ -104,125 +104,313 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---
--- Paste Question 1 here
+```
+Create a table named Events with the following columns:
 
-```sql
--- Paste your SQL code below for Question 1
+EventID as INTEGER
+EventName as TEXT
+EventDate as DATE
+For example:
+
+Test
+pragma table_info('Events');
+Result
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           EventID     INTEGER     0                       0
+1           EventName   TEXT        0                       0
+2           EventDate   DATE        0                       0
+
+```
+
+```
+CREATE TABLE Events(
+    EventID INTEGER,
+    EventName TEXT,
+    EventDate DATE
+);
 ```
 
 **Output:**
 
-![Output1](output.png)
+<img width="1332" height="300" alt="image" src="https://github.com/user-attachments/assets/f4e4ad04-f37f-4b09-9cbc-ca2fc856d9de" />
+
 
 **Question 2**
----
--- Paste Question 2 here
+```
+Create a table named ProjectAssignments with the following constraints:
+AssignmentID as INTEGER should be the primary key.
+EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
+ProjectID as INTEGER should be a foreign key referencing Projects(ProjectID).
+AssignmentDate as DATE should be NOT NULL.
+For example:
 
-```sql
--- Paste your SQL code below for Question 2
+Test	
+INSERT INTO ProjectAssignments (AssignmentID, EmployeeID, ProjectID, AssignmentDate) VALUES (2, 99, 1, '2024-01-03');
+Result
+Error: FOREIGN KEY constraint failed
+
+```
+```
+CREATE TABLE ProjectAssignments(
+    AssignmentID INTEGER,
+    EmployeeID INTEGER,
+    ProjectID INTEGER,
+    AssignmentDate DATE NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (ProjectID) REFERENCES Projects(ProjectID)
+);
 ```
 
 **Output:**
 
-![Output2](output.png)
+<img width="1706" height="264" alt="image" src="https://github.com/user-attachments/assets/c9289a89-7e60-40ec-a0bc-9e33a7007392" />
+
 
 **Question 3**
----
--- Paste Question 3 here
+```
+Write a SQL query to add a new column MobileNumber of type NUMBER and a new column Address of type VARCHAR(100) to the Student_details table.
 
-```sql
--- Paste your SQL code below for Question 3
+For example:
+
+Test	
+pragma table_info('Student_details');
+Result
+cid    name             type             notnu  dflt_value  pk
+-----  ---------------  ---------------  -----  ----------  ----------
+0      RollNo           int              0                  1
+1      Name             VARCHAR(100)     1                  0
+2      Gender           TEXT             1                  0
+3      Subject          VARCHAR(30)      0                  0
+4      MARKS            INT (3)          0                  0
+5      MobileNumber     NUMBER           0                  0
+6      Address          VARCHAR(100)     0                  0
+```
+
+```
+ALTER TABLE student_details
+ADD MobileNumber NUMBER;
+ALTER TABLE student_details
+ADD Address VARCHAR(100);
 ```
 
 **Output:**
 
-![Output3](output.png)
+<img width="1275" height="293" alt="image" src="https://github.com/user-attachments/assets/cfd12868-34d4-4ed7-ade0-010e46cf2471" />
 
 **Question 4**
----
--- Paste Question 4 here
-
-```sql
--- Paste your SQL code below for Question 4
 ```
+create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
+For example:
 
+Test	
+INSERT INTO jobs (job_id, job_title, min_salary, max_salary) VALUES (1, 'Software Engineer', 9000, 15000);
+SELECT * FROM jobs;
+Result
+job_id      job_title          min_salary  max_salary
+----------  -----------------  ----------  ----------
+1           Software Engineer  9000        15000
+
+```
+```
+CREATE TABLE jobs(
+    job_id INTEGER PRIMARY KEY,
+    job_title TEXT UNIQUE DEFAULT '',
+    min_salary INTEGER DEFAULT 8000,
+    max_salary INTEGER NULL
+);
+```
 **Output:**
 
-![Output4](output.png)
+<img width="1635" height="305" alt="image" src="https://github.com/user-attachments/assets/46f1346a-c069-4a50-9974-a7149c8985c0" />
 
 **Question 5**
----
--- Paste Question 5 here
-
-```sql
--- Paste your SQL code below for Question 5
 ```
+In the Employee table, insert a record where some fields are NULL, another record where all fields are filled without any NULL values, and a third record where some fields are filled, and others are left as NULL.
 
+EmployeeID  Name          Position    Department  Salary
+----------  ------------  ----------  ----------  ----------
+5           George Clark  Consultant
+7           Noah Davis    Manager     HR          60000
+8           Ava Miller    Consultant  IT
+ 
+
+For example:
+
+Test	
+SELECT * FROM Employee;
+Result
+EmployeeID  Name          Position    Department  Salary
+----------  ------------  ----------  ----------  ----------
+5           George Clark  Consultant
+7           Noah Davis    Manager     HR          60000
+8           Ava Miller    Consultant  IT
+
+```
+```
+INSERT INTO Employee(EmployeeID,Name,Position)
+VALUES
+(5,'George Clark','Consultant');
+INSERT INTO Employee(EmployeeID,Name,Position,Department,Salary)
+VALUES
+(7,'Noah Davis','Manager','HR',60000);
+INSERT INTO Employee(EmployeeID,Name,Position,Department)
+VALUES
+(8,'Ava Miller','Consultant','IT');
+
+```
 **Output:**
 
-![Output5](output.png)
+<img width="1221" height="270" alt="image" src="https://github.com/user-attachments/assets/b80e0294-ba4a-47f7-bef7-0e82462b8ba5" />
 
 **Question 6**
----
--- Paste Question 6 here
-
-```sql
--- Paste your SQL code below for Question 6
 ```
+Insert all products from Discontinued_products into Products.
 
+Table attributes are ProductID, ProductName, Price, Stock
+
+For example:
+
+Test	
+select * from Products;
+Result
+ProductID   ProductName     Price       Stock
+----------  --------------  ----------  ----------
+101         Old Smartphone  199.99      0
+102         Vintage Laptop  399.99      10
+103         Classic Tablet  149.99      5
+
+```
+```
+INSERT INTO Products
+SELECT *FROM Discontinued_products;
+```
 **Output:**
 
-![Output6](output.png)
+<img width="1252" height="272" alt="image" src="https://github.com/user-attachments/assets/4743e739-67d9-4747-81dc-809485bc7f9b" />
 
 **Question 7**
----
--- Paste Question 7 here
-
-```sql
--- Paste your SQL code below for Question 7
 ```
+Create a table named Bonuses with the following constraints:
+BonusID as INTEGER should be the primary key.
+EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
+BonusAmount as REAL should be greater than 0.
+BonusDate as DATE.
+Reason as TEXT should not be NULL.
+For example:
 
+Test	
+INSERT INTO Bonuses (BonusID, EmployeeID, BonusAmount, BonusDate, Reason) VALUES (1, 6, 1000.0, '2024-08-01', 'Outstanding performance');
+SELECT * FROM Bonuses;
+Result
+BonusID     EmployeeID  BonusAmount  BonusDate   Reason
+----------  ----------  -----------  ----------  -----------------------
+1           6           1000.0       2024-08-01  Outstanding performance
+
+```
+```
+CREATE TABLE Bonuses(
+    BonusID INTEGER PRIMARY KEY,
+    EmployeeID INTEGER,
+    BonusAmount REAL CHECK(BonusAmount>0),
+    BonusDate DATE,
+    Reason TEXT NOT NULL,
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+); 
+```
 **Output:**
 
-![Output7](output.png)
+<img width="1847" height="234" alt="image" src="https://github.com/user-attachments/assets/172a8690-f34e-47f4-8779-c28be565157b" />
 
 **Question 8**
----
--- Paste Question 8 here
-
-```sql
--- Paste your SQL code below for Question 8
 ```
+Create a table named Shipments with the following constraints:
+ShipmentID as INTEGER should be the primary key.
+ShipmentDate as DATE.
+SupplierID as INTEGER should be a foreign key referencing Suppliers(SupplierID).
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+For example:
 
+Test	
+INSERT INTO Shipments (ShipmentID, ShipmentDate, SupplierID, OrderID) VALUES (2, '2024-08-03', 99, 1);
+Result
+Error: FOREIGN KEY constraint failed
+
+```
+```
+CREATE TABLE Shipments(
+    ShipmentID INTEGER PRIMARY KEY,
+    ShipmentDate DATE,
+    SupplierID INTEGER,
+    OrderId INTEGER,
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+```
 **Output:**
 
-![Output8](output.png)
+<img width="1234" height="202" alt="image" src="https://github.com/user-attachments/assets/a799acc2-0899-4390-a18d-a007124005b2" />
 
 **Question 9**
----
--- Paste Question 9 here
-
-```sql
--- Paste your SQL code below for Question 9
 ```
+Write a SQL Query  to change the name of attribute "name" to "first_name"  and add mobilenumber as number ,DOB as Date in the table Companies. 
 
+For example:
+
+Test	
+pragma table_info('Companies');
+Result
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           id          int         0                       0
+1           first_name  varchar(50  0                       0
+2           address     text        0                       0
+3           email       varchar(50  0                       0
+4           phone       varchar(10  0                       0
+5           mobilenumb  number      0                       0
+6           DOB         Date        0                       0
+```
+```
+ALTER TABLE Companies
+RENAME name TO first_name;
+ALTER TABLE Companies
+ADD mobilenumber number;
+ALTER TABLE Companies
+ADD DOB Date;
+
+```
 **Output:**
 
-![Output9](output.png)
+<img width="1274" height="302" alt="image" src="https://github.com/user-attachments/assets/87851ed9-e011-4d83-b110-1f2b60e71106" />
 
 **Question 10**
----
--- Paste Question 10 here
-
-```sql
--- Paste your SQL code below for Question 10
 ```
+Insert the below data into the Employee table, allowing the Department and Salary columns to take their default values.
 
+EmployeeID  Name         Position
+----------  -----------  ----------
+4           Emily White  Analyst
+
+Note: The Department and Salary columns will use their default values.    
+For example:
+
+Test	
+SELECT EmployeeID, Name, Position 
+FROM Employee;
+Result
+EmployeeID  Name         Position
+----------  -----------  ----------
+4           Emily White  Analyst
+
+```
+```
+INSERT INTO Employee(EmployeeID,Name,Position)
+VALUES
+(4,'Emily White','Analyst');
+```
 **Output:**
 
-![Output10](output.png)
-
+<img width="893" height="268" alt="image" src="https://github.com/user-attachments/assets/88a2c574-f9fc-4810-8490-7bb7d3ac1045" />
 
 ## RESULT
 Thus, the SQL queries to implement different types of constraints and DDL commands have been executed successfully.
